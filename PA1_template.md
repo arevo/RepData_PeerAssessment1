@@ -37,13 +37,15 @@ hist(steps_per_day$steps_total, xlab="Steps count", ylab="Frequency", main="Hist
 mean_steps_per_day <- mean(steps_per_day$steps_total)
 median_steps_per_day <- median(steps_per_day$steps_total)
 ```
-
+1. Mean steps per day 9354.2295082 
+2. Median steps per day 10395  
 
 ## What is the average daily activity pattern?
 
 ```r
 by_interval_activity <- group_by(activity, interval)
 steps_per_interval <- summarize(by_interval_activity, steps_total=sum(steps, na.rm=TRUE))
+par(mfrow=c(1,1), las=1)
 plot(steps_per_interval$interval, steps_per_interval$steps_total, type="l", xlab="Interval", ylab="Step count")
 ```
 
@@ -53,6 +55,7 @@ plot(steps_per_interval$interval, steps_per_interval$steps_total, type="l", xlab
 x <- filter(steps_per_interval, steps_total==10927)
 maximum_step_interval <- x$interval
 ```
+1. Maximum step interval 835
 
 ## Inputing missing values
 
@@ -62,6 +65,7 @@ new_activity <- activity
 new_activity[is.na(new_activity)] <- mean_steps_per_day # Replace missing values with mean for that day
 by_day_new_activity <- group_by(new_activity, date)
 new_steps_per_day <- summarize(by_day_new_activity, steps_total=sum(steps, na.rm=TRUE))
+par(mfrow=c(1,1), las=1)
 hist(new_steps_per_day$steps_total,  xlab="Steps count", ylab="Frequency", main="Histogram of daily step count without NA.")
 ```
 
@@ -81,16 +85,11 @@ weekend_activity <- filter(activity, isweekend== TRUE)
 weekday_activity <- filter(activity, isweekend== FALSE)
 by_interval_activity_weekend <- group_by(weekend_activity, interval)
 steps_per_interval_weekend <- summarize(by_interval_activity_weekend, steps_total=sum(steps, na.rm=TRUE))
+par(mfrow=c(2,1), las=1)
 plot(steps_per_interval_weekend$interval, steps_per_interval_weekend$steps_total, type="l", xlab="Interval", ylab="Step count in weekends")
-```
-
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
-
-```r
-par(mfrow=c(1,1), las=1)
 by_interval_activity_weekday <- group_by(weekday_activity, interval)
 steps_per_interval_weekday <- summarize(by_interval_activity_weekday, steps_total=sum(steps, na.rm=TRUE))
 plot(steps_per_interval_weekday$interval, steps_per_interval_weekday$steps_total, type="l", xlab="Interval", ylab="Step count in weekday")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-2.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
