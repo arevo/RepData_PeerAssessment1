@@ -60,13 +60,12 @@ maximum_step_interval <- x$interval
 ## Inputing missing values
 
 ```r
-sum_of_missing_na = sum(is.na(activity))
 new_activity <- activity
-new_activity[is.na(new_activity)] <- mean_steps_per_day # Replace missing values with mean for that day
+new_activity[is.na(new_activity)] <- 0 # Replace missing values with mean for that day
 by_day_new_activity <- group_by(new_activity, date)
 new_steps_per_day <- summarize(by_day_new_activity, steps_total=sum(steps, na.rm=TRUE))
 par(mfrow=c(1,1), las=1)
-hist(new_steps_per_day$steps_total,  xlab="Steps count", ylab="Frequency", main="Histogram of daily step count without NA.")
+hist(new_steps_per_day$steps_total,  xlab="Steps count", ylab="Frequency", main="Histogram of daily step count without NA (replace with 0).")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
@@ -75,6 +74,8 @@ hist(new_steps_per_day$steps_total,  xlab="Steps count", ylab="Frequency", main=
 mean_steps_per_day <- mean(new_steps_per_day$steps_total)
 median_steps_per_day <- median(new_steps_per_day$steps_total)
 ```
+1. Mean steps per day 9354.2295082 
+2. Median steps per day 1.0395\times 10^{4} 
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
